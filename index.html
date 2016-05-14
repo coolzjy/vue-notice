@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Vue-notice</title>
+    <link href="http://cdn.bootcss.com/pure/0.6.0/pure-min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Dosis:300,500&text=Vue-notice" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/highlight.js/9.3.0/styles/rainbow.min.css" rel="stylesheet">
+    <link href="style/index.css" rel="stylesheet">
+
+    <script src="http://cdn.bootcss.com/highlight.js/9.3.0/highlight.min.js"></script>
+    <script src="http://cdn.bootcss.com/highlight.js/9.3.0/languages/javascript.min.js"></script>
+    <script src="http://cdn.bootcss.com/vue/1.0.24/vue.min.js"></script>
+    <script src="script/index.js"></script>
+    <script type="text/javascript">
+      hljs.initHighlightingOnLoad()
+      Vue.use(VueNotice)
+      var vue = new Vue({ el: 'body' })
+    </script>
+  </head>
+  <body>
+    <div class="pure-g wrapper">
+      <div class="pure-u-md-1-5"></div>
+      <div class="pure-u-1 pure-u-md-3-5">
+        <section>
+          <h1>Vue-notice</h1>
+          <p>
+            A notice plug-in for Vue
+          </p>
+        </section>
+        <section>
+          <h2>Installation</h2>
+          <pre><code class="javascript">import Vue from 'vue'
+import VueNotice from 'vue-notice'
+
+Vue.use(VueNotice)</code></pre>
+        </section>
+        <section>
+          <h2>Basic Usage</h2>
+          <p>
+            After install Vue-notice, you can easily use <code>$notice</code> method in any Vue instance
+          </p>
+          <pre><code class="javascript">// default
+this.$notice('content')
+
+// with style (success, info, warning, error supported)
+this.$notice('warning', 'warning')</code></pre>
+          <div>
+            Try it out:
+            <button class="pure-button" onclick="vue.$notice('default')">Default</button>
+            <button class="pure-button" onclick="vue.$notice('success', 'success')">Success</button>
+            <button class="pure-button" onclick="vue.$notice('info', 'info')">Info</button>
+            <button class="pure-button" onclick="vue.$notice('warning', 'warning')">Warning</button>
+            <button class="pure-button" onclick="vue.$notice('error', 'error')">Error</button>
+          </div>
+        </section>
+        <section>
+          <h2>Advanced Usage</h2>
+          <pre><code class="javascript">// options
+// duration
+this.$notice('content', { duration: 1000, style: 'success' })
+// customize style
+vue.$notice('content', { style: { color: 'white', background: 'black' }})</code></pre>
+          <div>
+            Try it out:
+            <button class="pure-button" onclick="vue.$notice('content', { duration: 1000, style: 'success' })">1s Duration</button>
+            <button class="pure-button" onclick="vue.$notice('content', { style: { color: 'white', background: 'black' }})">Customize Style</button>
+          </div>
+        </section>
+      </div>
+      <div class="pure-u-md-1-5"></div>
+    </div>
+  </body>
+</html>

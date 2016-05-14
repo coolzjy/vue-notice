@@ -1,0 +1,14 @@
+.wrapper {
+  margin: 10px;
+}
+
+h1 {
+  font-family: 'Dosis', 'Sans-serif';
+  font-weight: normal;
+  margin: 0;
+}
+
+code {
+  border-radius: 6px;
+  font-family: Menlo, Monaco, Consolas, "Andale Mono", "lucida console", "Courier New", monospace;
+}
