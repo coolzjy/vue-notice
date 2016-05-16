@@ -12,3 +12,7 @@ code {
   border-radius: 6px;
   font-family: Menlo, Monaco, Consolas, "Andale Mono", "lucida console", "Courier New", monospace;
 }
+
+button {
+  margin-bottom: 5px;
+}

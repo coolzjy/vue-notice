@@ -16,29 +16,40 @@
     background: 'white',
     textAlign: 'center',
     boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 12px 4px',
-    opacity: '0',
-    transition: 'opacity 0.5s'
+		transition: 'opacity 0.5s'
   }
 
-  var successStyle = {
-    background: '#A5D6A7',
-    color: '#1B5E20'
-  }
+	var hideStyle = {
+		opacity: '0'
+	}
 
-  var infoStyle = {
-    background: '#90CAF9',
-    color: '#0D47A1'
-  }
+	var showStyle = {
+		opacity: '1'
+	}
 
-  var warningStyle = {
-    background: '#FFF59D',
-    color: '#F57F17'
-  }
+	var themes = {
+		success: {
+			background: '#A5D6A7',
+			color: '#1B5E20'
+		},
 
-  var errorStyle = {
-    background: '#F48FB1',
-    color: '#880E4F'
-  }
+		info: {
+			background: '#90CAF9',
+			color: '#0D47A1'
+		},
+
+		warning: {
+			background: '#FFF59D',
+			color: '#F57F17'
+		},
+
+		error: {
+			background: '#F48FB1',
+			color: '#880E4F'
+		}
+	}
+
+	var duration = 5000
 
   function applyStyle (el, styleObj) {
     for (var style in styleObj) {
@@ -49,19 +60,8 @@
   }
 
 	function applyTheme (el, name) {
-		switch (name) {
-			case 'success':
-				applyStyle(el, successStyle)
-				break;
-			case 'info':
-				applyStyle(el, infoStyle)
-				break;
-			case 'warning':
-				applyStyle(el, warningStyle)
-				break;
-			case 'error':
-				applyStyle(el, errorStyle)
-				break;
+		if (themes[name]) {
+			applyStyle(el, themes[name])
 		}
 	}
 
@@ -69,13 +69,15 @@
     this.div = document.createElement('div')
     this.div.innerHTML = content
     applyStyle(this.div, baseStyle)
+		applyStyle(this.div, hideStyle)
+		var curDuration = duration
 
     // options
-    var duration = 5000
-
     if (options !== undefined) {
       if (typeof options === 'object') {
-        duration = options.duration ? options.duration : duration
+        if (typeof options.duration === 'number') {
+        	curDuration = options.duration
+        }
 				if (typeof options.style === 'object') {
 					applyStyle(this.div, options.style)
 				} else if (typeof options.style === 'string') {
@@ -91,19 +93,46 @@
 
 		// if set opacity sync, the transition will be ignored
     setTimeout((function () {
-      this.div.style.opacity = '1'
+      applyStyle(this.div, showStyle)
     }).bind(this), 0)
 
     setTimeout((function () {
-      this.div.style.opacity = '0'
+      applyStyle(this.div, hideStyle)
       setTimeout((function () {
         document.body.removeChild(this.div)
       }).bind(this), 500)
-    }).bind(this), duration)
+    }).bind(this), curDuration)
   }
 
   return {
 		install: function (Vue, options) {
+			// apply global customized duration
+			if (options) {
+				if (typeof options.duration === 'number') {
+					duration = options.duration
+				}
+
+				// apply global customized style
+				if (typeof options.style === 'object') {
+					for (var style in options.style) {
+						if (options.style.hasOwnProperty(style)) {
+							baseStyle[style] = options.style[style]
+						}
+					}
+				}
+
+				// apply global customized themes
+				// the customized theme will override default theme
+				if (typeof options.themes === 'object') {
+					for (var theme in options.themes) {
+						if (options.themes.hasOwnProperty(theme)) {
+							themes[theme] = options.themes[theme]
+						}
+					}
+				}
+			}
+
+			// inject $notice into Vue instance
 	    Vue.prototype.$notice = function (content, options) {
 	      new Notice(content, options)
 	    }

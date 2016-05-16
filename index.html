@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vue-notice</title>
     <link href="http://cdn.bootcss.com/pure/0.6.0/pure-min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css" rel="stylesheet">
@@ -15,7 +16,32 @@
     <script src="script/index.js"></script>
     <script type="text/javascript">
       hljs.initHighlightingOnLoad()
-      Vue.use(VueNotice)
+
+      var options = {
+        // notice duration, default is 5000
+        duration: 3000,
+
+        // global style, based on built-in style
+        style: {
+          fontSize: '14px'
+        },
+
+        // global themes, will overide corresponding built-in theme
+        themes: {
+          // will override
+          info: {
+            color: 'blue'
+          },
+
+          // will create new theme
+          rainbow: {
+            backgroundImage: 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)',
+            color: 'white'
+          }
+        }
+      }
+
+      Vue.use(VueNotice, options)
       var vue = new Vue({ el: 'body' })
     </script>
   </head>
@@ -34,7 +60,33 @@
           <pre><code class="javascript">import Vue from 'vue'
 import VueNotice from 'vue-notice'
 
-Vue.use(VueNotice)</code></pre>
+Vue.use(VueNotice, options)</code></pre>
+        </section>
+        <section>
+          <h2>Global Options</h2>
+          <pre><code class="javascript">var options = {
+  // notice duration, default is 5000
+  duration: 3000,
+
+  // global style, based on built-in style
+  style: {
+    fontSize: '14px'
+  },
+
+  // global themes, will overide corresponding built-in theme
+  themes: {
+    // will override
+    info: {
+      color: 'blue'
+    },
+
+    // will create new theme
+    rainbow: {
+      backgroundImage: 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)',
+      color: 'white'
+    }
+  }
+}</code></pre>
         </section>
         <section>
           <h2>Basic Usage</h2>
@@ -45,23 +97,27 @@ Vue.use(VueNotice)</code></pre>
 this.$notice('content')
 
 // with style (success, info, warning, error supported)
-this.$notice('warning', 'warning')</code></pre>
+this.$notice('warning', 'warning')
+
+// with customized style in global options
+this.$notice('WOW!', 'rainbow')</code></pre>
           <div>
             Try it out:
             <button class="pure-button" onclick="vue.$notice('default')">Default</button>
             <button class="pure-button" onclick="vue.$notice('success', 'success')">Success</button>
-            <button class="pure-button" onclick="vue.$notice('info', 'info')">Info</button>
+            <button class="pure-button" onclick="vue.$notice('info', 'info')">Info(Overrided)</button>
             <button class="pure-button" onclick="vue.$notice('warning', 'warning')">Warning</button>
             <button class="pure-button" onclick="vue.$notice('error', 'error')">Error</button>
+            <button class="pure-button" onclick="vue.$notice('WOW!', 'rainbow')">Rainbow(Customized)</button>
           </div>
         </section>
         <section>
           <h2>Advanced Usage</h2>
-          <pre><code class="javascript">// options
+          <pre><code class="javascript">// instace options
 // duration
 this.$notice('content', { duration: 1000, style: 'success' })
 // customize style
-vue.$notice('content', { style: { color: 'white', background: 'black' }})</code></pre>
+this.$notice('content', { style: { color: 'white', background: 'black' }})</code></pre>
           <div>
             Try it out:
             <button class="pure-button" onclick="vue.$notice('content', { duration: 1000, style: 'success' })">1s Duration</button>
