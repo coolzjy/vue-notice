@@ -91,10 +91,9 @@
 
     document.body.appendChild(this.div)
 
-    // if set opacity sync, the transition will be ignored
-    setTimeout((function () {
-      applyStyle(this.div, showStyle)
-    }).bind(this), 0)
+    // make sure brower has render style above
+    window.getComputedStyle(this.div).opacity
+    applyStyle(this.div, showStyle)
 
     setTimeout((function () {
       applyStyle(this.div, hideStyle)
