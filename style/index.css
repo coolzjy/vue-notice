@@ -2,6 +2,10 @@
   margin: 10px;
 }
 
+header {
+  text-align: center;
+}
+
 h1 {
   font-family: 'Dosis', 'Sans-serif';
   font-weight: normal;
@@ -15,4 +19,9 @@ code {
 
 button {
   margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 20px;
+  text-align: center;
 }

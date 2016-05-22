@@ -103,7 +103,7 @@
     }).bind(this), curDuration)
   }
 
-  return {
+  var index_src = {
     install: function (Vue, options) {
       // apply global customized duration
       if (options) {
@@ -137,5 +137,7 @@
       }
     }
   }
+
+  return index_src;
 
 }));
